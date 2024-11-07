@@ -1,3 +1,4 @@
+var isFirstResponse = true;
 var $messages = $('.messages-content'),
     d, h, m,
     id = generateSessionId();  // Generate id when page loads
@@ -95,6 +96,14 @@ function receiveMessage(message) {
   $('<div class="message new"><figure class="avatar"><img src="static/assets/profile.png" /></figure>' + message + '</div>').appendTo($('.mCSB_container')).addClass('new');
   setDate();
   updateScrollbar();
+
+  if (isFirstResponse) {
+    $('.button-container').css({
+      'opacity': '1',             // Fade in
+      'pointer-events': 'auto'    // Make interactive
+    });
+    isFirstResponse = false;  // Set the flag to false after showing buttons
+  }
 }
 
 function firstMessage() {

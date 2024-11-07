@@ -1,11 +1,14 @@
 .button-container {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 10px; /* Adjust spacing between buttons */
+  justify-content: center;
+  gap: 10px;
   position: absolute;
   top: 30px;
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0;              /* Start hidden */
+  pointer-events: none;
+  transition: opacity 0.5s ease;  /* Fade-in transition */
 }
 
 .sketch-button {
