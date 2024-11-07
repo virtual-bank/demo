@@ -93,7 +93,11 @@ function sendMessageToServer(message) {
 function receiveMessage(message) {
   // Hide loading message once we get a response
   hideLoadingMessage();
-  $('<div class="message new"><figure class="avatar"><img src="static/assets/profile.png" /></figure>' + message + '</div>').appendTo($('.mCSB_container')).addClass('new');
+
+  // Append the server response message
+  let messageHtml = $('<div class="message new"><figure class="avatar"><img src="static/assets/profile.png" /></figure>' + message + '</div>');
+  $('.mCSB_container').append(messageHtml.addClass('new'));
+
   setDate();
   updateScrollbar();
 

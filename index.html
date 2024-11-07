@@ -106,8 +106,21 @@
   <!-- Content that will load after the preloader -->
   <div id="content">
     <div class="button-container">
-      <button class="sketch-button">Hodim bilan uchrashish</button>
-      <button class="sketch-button">Yangi suhbat boshlash</button>
+        <button class="sketch-button">Hodim bilan uchrashish</button>
+        <button class="button">
+            <div class="trash">
+                <div class="top">
+                    <div class="paper"></div>
+                </div>
+                <div class="box"></div>
+                <div class="check">
+                    <svg viewBox="0 0 8 6">
+                        <polyline points="1 3.4 2.71428571 5 7 1"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <span>Yangi suhbat boshlash</span>
+        </button>
     </div>
     <div class="chat backdrop-blur">
       <div class="chat-title">
@@ -158,6 +171,7 @@
         content.style.opacity = '1';    // Fade-in content
       }, 300);
     });
+
   </script>
 </body>
 </html>

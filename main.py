@@ -12,7 +12,7 @@ def index():
 @app.route('/process', methods=['POST'])
 def process():
     #logic to implement to answer question of user
-    time.sleep(6)
+    time.sleep(1)
     return jsonify({'response': "hello"})
 
 if __name__ == '__main__':
