@@ -1,0 +1,28 @@
+.footer {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+.footer-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
+.footer-text {
+font-weight: bold;
+color: white;
+font-family: sans-serif;
+font-size: 1rem;
+}
