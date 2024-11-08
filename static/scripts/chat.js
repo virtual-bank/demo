@@ -71,23 +71,34 @@ function sendMessageToServer(message) {
   // Use setTimeout to delay showing the loading message
   setTimeout(function() {
     showLoadingMessage(); // Show loading message after the specified delay
-  }, 2000); // 2 seconds delay
+  }, 0); // 2 seconds delay
 
-  $.ajax({
-    url: '/process',  // Your server endpoint
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({"type": "response", "message": message, "id": id }),
-    success: function(response) {
-      // Handle the response from the server and display it
-      receiveMessage(response.response);  // Assuming server returns {response: "message"}
-    },
-    error: function() {
-      console.error('Error in sending message.');
-      // Optionally hide loading message or show an error message
-      hideLoadingMessage();
-    }
-  });
+  const conversation = collectVisibleMessages();
+
+  if (conversation.length > 0) {
+    // Send conversation data to the server, including the predefined `id`
+    $.ajax({
+      url: '/process',  // Your server endpoint
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        type: "response",
+        data: conversation,
+        id: id  // Include the predefined `id`
+      }),
+        success: function(response) {
+          // Handle the response from the server and display it
+          receiveMessage(response.response);  // Assuming server returns {response: "message"}
+        },
+        error: function() {
+          console.error('Error in sending message.');
+          // Optionally hide loading message or show an error message
+          hideLoadingMessage();
+        }
+    });
+  } else {
+    console.warn('No conversation data to send.');
+  }
 }
 
 function receiveMessage(message) {
@@ -158,7 +169,7 @@ function collectVisibleMessages() {
   const conversation = [];
 
   // Select all messages and loop through them
-  $('.messages-content .message').each(function() {
+  $('.messages-content .message').not(':first').each(function() {
     // Check if the message is visible on the screen
     if ($(this).is(':visible')) {
       const messageText = $(this).text().trim();
@@ -166,7 +177,7 @@ function collectVisibleMessages() {
 
       if (messageText) {
         conversation.push({
-          role: isUserMessage ? "user" : "system",
+          role: isUserMessage ? "user" : "assistant",
           content: messageText
         });
       }

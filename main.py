@@ -18,6 +18,7 @@ def process():
         return "ok"
     elif type == "response":
         #logic to implement to answer question of user
+        print(request.json['data'])
         time.sleep(1)
         return jsonify({'response': "hello"})
     else:
