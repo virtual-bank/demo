@@ -56,6 +56,12 @@ Chat
   flex-direction: column;
 }
 
+@media (max-width: 768px) {
+  .chat {
+    transform: translate(-50%, -50%) scale(2); /* Larger scale for phones */
+  }
+}
+
 /*--------------------
 Chat Title
 --------------------*/
