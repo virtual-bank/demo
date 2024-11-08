@@ -46,7 +46,59 @@ Key Guidelines
 """
 
 
-INSTRUCTION_FOR_WHOLE_CONVERSATION = "insert text here"
+INSTRUCTION_FOR_WHOLE_CONVERSATION = """Given the following array of bank workers with their name, title, rating, description, and availability, please provide a list of the top 5 most suitable bank workers, ordered by the following criteria:
+1. Most recent availability time.
+2. Highest rating.
+3. Specialization or area of expertise (prioritize workers with expertise relevant to a customer's needs).
+
+The array of workers is as follows:
+
+data = [
+        {'name': 'john', 'title': 'relationship manager', 'rating': 4.8,
+         'description': 'specializes in personal banking and customer relationships', "available": "11/09/2024 14:30"},
+        {'name': 'anna', 'title': 'loan officer', 'rating': 4.7,
+         'description': 'focused on mortgage and personal loans', "available": "11/10/2024 09:45"},
+        {'name': 'emily', 'title': 'investment consultant', 'rating': 4.9,
+         'description': 'provides investment advice and portfolio management', "available": "11/11/2024 13:00"},
+        {'name': 'michael', 'title': 'financial planner', 'rating': 4.6,
+         'description': 'specializes in retirement planning and wealth management', "available": "11/13/2024 15:30"},
+        {'name': 'susan', 'title': 'credit analyst', 'rating': 4.7,
+         'description': 'focuses on analyzing creditworthiness for loans', "available": "11/09/2024 11:00"},
+        {'name': 'paul', 'title': 'commercial banker', 'rating': 4.8,
+         'description': 'expert in business loans and financial services', "available": "11/12/2024 16:00"},
+        {'name': 'tina', 'title': 'wealth advisor', 'rating': 4.9,
+         'description': 'focuses on high-net-worth individual clients', "available": "11/14/2024 10:15"},
+        {'name': 'roger', 'title': 'mortgage consultant', 'rating': 4.7,
+         'description': 'specializes in helping clients with home financing options', "available": "11/15/2024 12:30"},
+        {'name': 'grace', 'title': 'risk manager', 'rating': 4.6,
+         'description': 'works on identifying and managing financial risks', "available": "11/08/2024 14:00"},
+        {'name': 'ben', 'title': 'operations manager', 'rating': 4.8,
+         'description': 'oversees bank operations and ensures efficiency', "available": "11/09/2024 17:30"},
+        {'name': 'lily', 'title': 'banking consultant', 'rating': 4.7,
+         'description': 'advises clients on banking products and services', "available": "11/11/2024 10:30"},
+        {'name': 'nathan', 'title': 'foreign exchange consultant', 'rating': 4.9,
+         'description': 'specializes in foreign currency exchange and international transactions',
+         "available": "11/10/2024 13:00"},
+        {'name': 'sophie', 'title': 'digital banking consultant', 'rating': 4.6,
+         'description': 'helps clients with digital banking tools and services', "available": "11/14/2024 09:00"},
+        {'name': 'harry', 'title': 'small business banker', 'rating': 4.8,
+         'description': 'provides financial solutions to small and medium-sized enterprises',
+         "available": "11/12/2024 16:30"},
+        {'name': 'jessica', 'title': 'compliance officer', 'rating': 4.7,
+         'description': 'ensures banking activities comply with regulations', "available": "11/09/2024 13:00"},
+        {'name': 'will', 'title': 'payment systems consultant', 'rating': 4.9,
+         'description': 'specializes in payment processing and security', "available": "11/08/2024 11:00"},
+        {'name': 'claire', 'title': 'customer service representative', 'rating': 4.6,
+         'description': 'provides assistance with accounts and services', "available": "11/11/2024 14:00"},
+        {'name': 'david', 'title': 'financial analyst', 'rating': 4.8,
+         'description': 'analyzes market trends to advise on investment opportunities',
+         "available": "11/13/2024 12:30"},
+        {'name': 'olivia', 'title': 'bank branch manager', 'rating': 4.7,
+         'description': 'manages day-to-day operations and staff of a bank branch', "available": "11/14/2024 15:00"}
+    ]
+
+Please send the top 5 suitable workers' name only based on the criteria above."""
+
 API_KEY = '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'
 
 app = Flask(__name__, template_folder='.')
@@ -73,11 +125,49 @@ def ask_gpt(data):
 def fetch_database():
     # Simulating fetching from the database
     data = [
-        {'name': 'anna', 'title': 'software engineer', 'rating': 4.9, 'description': 'specializes in AI'},
-        {'name': 'nannie', 'title': 'data scientist', 'rating': 4.7, 'description': 'focuses on data analysis'},
-        {'name': 'john', 'title': 'head accountant', 'rating': 4.6, 'description': 'he has 5 years of experience'},
-        {'name': 'bellie', 'title': 'HR manager', 'rating': 4.8, 'description': 'excellent communication skills'}
+        {'name': 'john', 'title': 'relationship manager', 'rating': 4.8,
+         'description': 'specializes in personal banking and customer relationships', "available": "11/09/2024 14:30"},
+        {'name': 'anna', 'title': 'loan officer', 'rating': 4.7,
+         'description': 'focused on mortgage and personal loans', "available": "11/10/2024 09:45"},
+        {'name': 'emily', 'title': 'investment consultant', 'rating': 4.9,
+         'description': 'provides investment advice and portfolio management', "available": "11/11/2024 13:00"},
+        {'name': 'michael', 'title': 'financial planner', 'rating': 4.6,
+         'description': 'specializes in retirement planning and wealth management', "available": "11/13/2024 15:30"},
+        {'name': 'susan', 'title': 'credit analyst', 'rating': 4.7,
+         'description': 'focuses on analyzing creditworthiness for loans', "available": "11/09/2024 11:00"},
+        {'name': 'paul', 'title': 'commercial banker', 'rating': 4.8,
+         'description': 'expert in business loans and financial services', "available": "11/12/2024 16:00"},
+        {'name': 'tina', 'title': 'wealth advisor', 'rating': 4.9,
+         'description': 'focuses on high-net-worth individual clients', "available": "11/14/2024 10:15"},
+        {'name': 'roger', 'title': 'mortgage consultant', 'rating': 4.7,
+         'description': 'specializes in helping clients with home financing options', "available": "11/15/2024 12:30"},
+        {'name': 'grace', 'title': 'risk manager', 'rating': 4.6,
+         'description': 'works on identifying and managing financial risks', "available": "11/08/2024 14:00"},
+        {'name': 'ben', 'title': 'operations manager', 'rating': 4.8,
+         'description': 'oversees bank operations and ensures efficiency', "available": "11/09/2024 17:30"},
+        {'name': 'lily', 'title': 'banking consultant', 'rating': 4.7,
+         'description': 'advises clients on banking products and services', "available": "11/11/2024 10:30"},
+        {'name': 'nathan', 'title': 'foreign exchange consultant', 'rating': 4.9,
+         'description': 'specializes in foreign currency exchange and international transactions',
+         "available": "11/10/2024 13:00"},
+        {'name': 'sophie', 'title': 'digital banking consultant', 'rating': 4.6,
+         'description': 'helps clients with digital banking tools and services', "available": "11/14/2024 09:00"},
+        {'name': 'harry', 'title': 'small business banker', 'rating': 4.8,
+         'description': 'provides financial solutions to small and medium-sized enterprises',
+         "available": "11/12/2024 16:30"},
+        {'name': 'jessica', 'title': 'compliance officer', 'rating': 4.7,
+         'description': 'ensures banking activities comply with regulations', "available": "11/09/2024 13:00"},
+        {'name': 'will', 'title': 'payment systems consultant', 'rating': 4.9,
+         'description': 'specializes in payment processing and security', "available": "11/08/2024 11:00"},
+        {'name': 'claire', 'title': 'customer service representative', 'rating': 4.6,
+         'description': 'provides assistance with accounts and services', "available": "11/11/2024 14:00"},
+        {'name': 'david', 'title': 'financial analyst', 'rating': 4.8,
+         'description': 'analyzes market trends to advise on investment opportunities',
+         "available": "11/13/2024 12:30"},
+        {'name': 'olivia', 'title': 'bank branch manager', 'rating': 4.7,
+         'description': 'manages day-to-day operations and staff of a bank branch', "available": "11/14/2024 15:00"}
     ]
+
     return data
 
 def find_matches(response):
@@ -117,6 +207,7 @@ def process():
                 closest = find_asap()
                 return jsonify({'candidates': closest})
             else:
+                print(candidates)
                 return jsonify({'candidates': candidates})
         else:
             print(response.json())
