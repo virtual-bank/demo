@@ -22,7 +22,7 @@
   font-family: inherit;
   font-size: 16px;
   font-weight: 500;
-  background-color: #2a2f43;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 11px;
   padding: 12px 20px;
   position: relative;
@@ -118,8 +118,8 @@ body {
 }
 
 .button {
-  --background: #2B3044;
-  --background-hover: #1E2235;
+  --background: rgba(0, 0, 0, 0.5);
+  --background-hover: rgba(0, 0, 0, 0.8);
   --text: #fff;
   --shadow: rgba(0, 9, 61, .2);
   --paper: #5C86FF;
@@ -134,7 +134,6 @@ body {
   background: none;
   padding: 12px 20px;
   border-radius: 11px;
-  min-width: 142px;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
@@ -157,7 +156,7 @@ body {
 .button .trash {
   display: block;
   position: relative;
-  left: -8px;
+  left: 0px;
   transform: translate(var(--trash-x, 0), var(--trash-y, 1px)) translateZ(0) scale(var(--trash-scale, 0.64));
   transition: transform 0.5s;
 }
@@ -297,7 +296,7 @@ body {
   --span-opacity: 0;
   --span-x: 16px;
   --span-delay: 0s;
-  --trash-x: 46px;
+  --trash-x: 0px;
   --trash-y: 2px;
   --trash-scale: 1;
   --trash-lines-opacity: 0;
