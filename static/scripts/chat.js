@@ -131,3 +131,23 @@ function hideLoadingMessage() {
   // Remove the loading message after getting the response or before showing the first message
   $('.message.loading').remove();
 }
+
+document.querySelectorAll('.button').forEach(button =>
+  button.addEventListener('click', e => {
+    if (!button.classList.contains('delete')) {
+      button.classList.add('delete');
+
+      // Fade out chat messages except the initial one
+      $('.messages-content .message').fadeOut(500);
+      setTimeout(() => button.classList.remove('delete'), 3200);
+    }
+    setTimeout(function() {
+    showLoadingMessage();  // Show loading animation before displaying the first message
+    setTimeout(function() {
+      firstMessage();  // Display first message after the loading animation
+    }, 2000); // 2 seconds delay for the first message
+  }, 100);
+
+    e.preventDefault();
+  })
+);
