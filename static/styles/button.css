@@ -12,7 +12,7 @@
 }
 
 /* Adjust for phones */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .button-container {
     top: 50px; /* Top offset for phones */
     transform: translateX(-50%) scale(1.3);
