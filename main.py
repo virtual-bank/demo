@@ -188,6 +188,10 @@ def find_asap():
 def index():
     return render_template('index.html')
 
+@app.route('/booking', methods=['GET'])
+def book():
+    return render_template('book.html')
+
 @app.route('/activate', methods=['GET'])
 def activate():
     return "Activated successfully!"

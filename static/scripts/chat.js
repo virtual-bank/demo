@@ -187,7 +187,6 @@ function collectVisibleMessages() {
   return conversation;
 }
 
-// Attach event listener to the button with the specific id
 $('#send-conversation-button').click(function() {
   const conversation = collectVisibleMessages();
 
@@ -204,6 +203,13 @@ $('#send-conversation-button').click(function() {
       }),
       success: function(response) {
         console.log('Conversation sent successfully:', response);
+
+        // Clear existing session storage files
+        clearSessionFiles();
+
+        // Store the new server response as a file in session storage
+        const filename = `${id}.json`;
+        saveToLocalStorage(filename, response);
       },
       error: function() {
         console.error('Error sending conversation.');
@@ -213,3 +219,24 @@ $('#send-conversation-button').click(function() {
     console.warn('No conversation data to send.');
   }
 });
+
+// Function to clear any existing files in session storage
+function clearSessionFiles() {
+  for (let key in sessionStorage) {
+    if (key.endsWith('.json')) {
+      sessionStorage.removeItem(key);
+    }
+  }
+  console.log('All temporary session files cleared.');
+}
+
+// Function to save data to session storage as a "file"
+function saveToLocalStorage(filename, data) {
+  if (typeof data === 'object') {
+    data = JSON.stringify(data); // Convert to JSON string if not already
+  }
+
+  // Store the JSON data in session storage with the filename as the key
+  sessionStorage.setItem(filename, data);
+  console.log(`Data saved to session storage as ${filename}`);
+}
