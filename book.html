@@ -6,10 +6,94 @@
   <title>Virtual Booking</title>
   <meta name="monetization" content="$ilp.uphold.com/WUdKN2pAgLAG"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/card.css') }}">
+
+      <style>
+    .loader {
+      position: relative;
+      width: 2.5em;
+      height: 2.5em;
+      transform: rotate(165deg);
+    }
+    .loader:before, .loader:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 0.25em;
+      transform: translate(-50%, -50%);
+    }
+    .loader:before {
+      animation: before 2s infinite;
+    }
+    .loader:after {
+      animation: after 2s infinite;
+    }
+
+    @keyframes before {
+      0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+      }
+      35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+      }
+      70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+      }
+      100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+      }
+    }
+    @keyframes after {
+      0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+      }
+      35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+      }
+      70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+      }
+      100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+      }
+    }
+
+    html, body {
+      height: 100%;
+      background: linear-gradient(0deg, #ffa585, #ffeda0);
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .loader {
+      position: absolute;
+      top: calc(50% - 1.25em);
+      left: calc(50% - 1.25em);
+    }
+
+    /* Initial content hidden with opacity 0 */
+    #content {
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  </style>
+
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div class="center">
+  <div class="loader"></div>
+  <div id="content">
+
+      <div class="center">
 
   <div class="card">
     <div class="additional">
@@ -116,7 +200,25 @@
   </div>
 
 </div>
-<!-- partial -->
+  </div>
+
+  <script>
+    // Hide the preloader and show the content with smooth transitions
+    window.addEventListener('load', function() {
+      const loader = document.querySelector('.loader');
+      const content = document.querySelector('#content');
+
+      // Fade out the loader
+      loader.style.opacity = '0';
+
+      // Once loader is faded out, display the content
+      setTimeout(function() {
+        loader.style.display = 'none';  // Hide loader after fade-out
+        content.style.opacity = '1';    // Fade-in content
+      }, 300);
+    });
+
+  </script>
 
 </body>
 </html>

@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 
 html, body {
- background: rgb(32,1,34);
-background: radial-gradient(circle, rgba(32,1,34,1) 0%, rgba(111,0,0,1) 100%);
- font-family: Abel, Arial, Verdana, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrollbars if not needed */
+  font-family: Abel, Arial, Verdana, sans-serif;
+  background: linear-gradient(0deg, #ffa585, #ffeda0);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
 
 .logo {
   width: 110px;
