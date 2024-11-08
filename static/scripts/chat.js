@@ -82,7 +82,7 @@ function sendMessageToServer(message) {
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
-        type: "response",
+        type: "request",
         data: conversation,
         id: id  // Include the predefined `id`
       }),
