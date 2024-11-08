@@ -77,7 +77,7 @@ function sendMessageToServer(message) {
     url: '/process',  // Your server endpoint
     type: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({ "message": message, "id": id }),
+    data: JSON.stringify({"type": "response", "message": message, "id": id }),
     success: function(response) {
       // Handle the response from the server and display it
       receiveMessage(response.response);  // Assuming server returns {response: "message"}
@@ -151,3 +151,54 @@ document.querySelectorAll('.button').forEach(button =>
     e.preventDefault();
   })
 );
+
+// Function to capture conversation and convert it into an array of JSON objects
+// Function to capture visible messages and convert them into an array of JSON objects
+function collectVisibleMessages() {
+  const conversation = [];
+
+  // Select all messages and loop through them
+  $('.messages-content .message').each(function() {
+    // Check if the message is visible on the screen
+    if ($(this).is(':visible')) {
+      const messageText = $(this).text().trim();
+      const isUserMessage = $(this).hasClass('message-personal');
+
+      if (messageText) {
+        conversation.push({
+          role: isUserMessage ? "user" : "system",
+          content: messageText
+        });
+      }
+    }
+  });
+
+  return conversation;
+}
+
+// Attach event listener to the button with the specific id
+$('#send-conversation-button').click(function() {
+  const conversation = collectVisibleMessages();
+
+  if (conversation.length > 0) {
+    // Send conversation data to the server, including the predefined `id`
+    $.ajax({
+      url: '/process',  // Your server endpoint
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        type: "conversation",
+        data: conversation,
+        id: id  // Include the predefined `id`
+      }),
+      success: function(response) {
+        console.log('Conversation sent successfully:', response);
+      },
+      error: function() {
+        console.error('Error sending conversation.');
+      }
+    });
+  } else {
+    console.warn('No conversation data to send.');
+  }
+});
