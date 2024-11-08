@@ -3,12 +3,19 @@
   justify-content: center;
   gap: 10px;
   position: absolute;
-  top: 30px;
+  top: 30px; /* Default for larger screens */
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0;              /* Start hidden */
+  opacity: 0; /* Start hidden */
   pointer-events: none;
-  transition: opacity 0.5s ease;  /* Fade-in transition */
+  transition: opacity 0.5s ease; /* Fade-in transition */
+}
+
+/* Adjust for phones */
+@media (max-width: 768px) {
+  .button-container {
+    top: 50px; /* Top offset for phones */
+  }
 }
 
 .sketch-button {
