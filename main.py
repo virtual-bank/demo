@@ -95,6 +95,10 @@ def find_asap():
 def index():
     return render_template('index.html')
 
+@app.route('/activate', methods=['GET'])
+def activate():
+    return "Activated successfully!"
+
 @app.route('/process', methods=['POST'])
 def process():
     type = request.json['type']
